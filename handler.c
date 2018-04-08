@@ -88,6 +88,8 @@ void Handler(int argc, char **argv)
 {
     int i, n_images, umbBinary, umbClassi, flag;
     int test = getArguments(argc, argv, &n_images, &umbBinary, &umbClassi, &flag);
+    if(argc<7)
+        printf("Faltan argumentos, por favor ejecute el programa con los argumentos necesarios.\n");
     if (test == 0)
     {
         if (flag == 1)
