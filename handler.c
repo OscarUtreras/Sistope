@@ -1,17 +1,52 @@
 #include "handler.h"
 
-void Handler()
+int getArguments(int argc, char **argv, int *n_images, int *umbBinary, int *umbClassi, int *flag)
+{
+  int argument;
+  while ((argument=getopt(argc, argv, "c:u:n:b")) != -1)
+  {
+      switch (argument)
+      {
+      case 'c':
+          sscanf(optarg, "%d", n_images);
+          break;
+      case 'u':
+          sscanf(optarg, "%d", umbBinary);
+          break;
+      case 'n':
+          sscanf(optarg, "%d", umbClassi);
+          break;
+      case 'b':
+          *flag=1;
+          break;
+      case '?':
+          if (optopt=='c'||optopt=='u'||optopt=='n')
+              fprintf(stderr, "Opcion -%c requiere un argumento.\n", optopt);
+          else if (isprint(optopt))
+              fprintf(stderr, "Opcion desconocida '%c'\n", optopt);
+          else
+              fprintf(stderr, "Opcion con caracter desconocido `\\x%x'.\n", optopt);
+          return 1;
+      default:
+          exit(1);
+      }
+  }
+  return 0;
+}
+
+void pipeline(int image_n, int umbral, int flag, int umbClassi)
 {
   bmpInfoHeader info;
   bmpFileHeader header;
   unsigned char *img;
   unsigned char *imgGrey;
   unsigned char *imgBinary;
-  int umbral=90;
+  char *filename=(char *)malloc(sizeof(char)*16);
+  int result;
 
   // Primera fase del pipeline: Leer la imagen
-  img=LoadBMP("porsche.bmp", &header, &info);
-  //imgBinary=(unsigned char*)malloc(info.imgsize); // Solicitamos memoria para la binarizada
+  sprintf(filename, "imagen_%d.bmp", image_n);
+  img=LoadBMP(filename, &header, &info);
 
   // Segunda fase del pipeline: Imagena escala de grises
   imgGrey=GreyScale(&info, img);
@@ -19,12 +54,35 @@ void Handler()
   // Tercera fase del pipeline: Escala de grises a imagen binarizada
   imgBinary=Binary(&info, imgGrey, umbral);
 
-  // Cuarta fase del pipeline: Almacenar imagen binarizada
-  SaveBMP("out.bmp", &header, &info, imgBinary);
+  // Cuarta frase del pipeline: Mostrar resultados de nearly black
+  if(flag==1)
+  {
+    result=nearlyBlack(&info, imgBinary, umbClassi);
+    if (result == 1)
+      printf("| %s   |      yes         | \n", filename);
+    else
+      printf("| %s   |       no         | \n", filename);
+  }
 
-  // Quinta frase del pipeline: Mostrar resultados de nearly black
+  // Quinta fase del pipeline: Almacenar imagen binarizada
+  sprintf(filename, "out_%d.bmp", image_n);
+  SaveBMP(filename, &info, imgBinary);
 
   free(img);
   free(imgGrey);
   free(imgBinary);
+}
+
+void Handler(int argc, char **argv)
+{
+  int i, n_images, umbBinary, umbClassi, flag;
+  int test=getArguments(argc, argv, &n_images, &umbBinary, &umbClassi, &flag);
+  if(test==0)
+  {
+    if(flag==1)
+      printf("|    Image       |   nearly black?   |\n");
+    for (i=1; i<=n_images; i++) {
+      pipeline(i, umbBinary, flag, umbClassi);
+    }
+  }
 }
