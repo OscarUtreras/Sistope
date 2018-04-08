@@ -50,7 +50,7 @@ void pipeline(int image_n, int umbral, int flag, int umbClassi)
     unsigned char *imgGrey;
     unsigned char *imgBinary;
     char *filename = (char *)malloc(sizeof(char) * 16);
-    int result;
+    int result, blacks;
 
     // Primera fase del pipeline: Leer la imagen
     sprintf(filename, "imagen_%d.bmp", image_n);
@@ -60,12 +60,12 @@ void pipeline(int image_n, int umbral, int flag, int umbClassi)
     imgGrey = GreyScale(&info, img);
 
     // Tercera fase del pipeline: Psar de escala de grises a imagen binarizada
-    imgBinary = Binary(&info, imgGrey, umbral);
+    imgBinary = Binary(&info, imgGrey, umbral, &blacks);
 
     // Cuarta frase del pipeline: Mostrar resultados de nearly black (en caso de que se solicite a traves de la bandera)
     if (flag == 1)
     {
-        result = nearlyBlack(&info, imgBinary, umbClassi);
+        result = nearlyBlack(&info, blacks, umbClassi);
         if (result == 1)
             printf("| %s   |      yes         | \n", filename);
         else
@@ -81,7 +81,7 @@ void pipeline(int image_n, int umbral, int flag, int umbClassi)
     free(imgBinary);
 }
 
-/* Procedimiento encargado de ... .
+/* Procedimiento encargado de manejar la ejecución del programa.
 Entrada: argc y argv.
 Salida: nada. */
 void Handler(int argc, char **argv)

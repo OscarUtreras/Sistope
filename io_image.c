@@ -57,7 +57,7 @@ void SaveBMP(char *filename, bmpInfoHeader *bInfoHeader, unsigned char *imgdata)
   /* header.resv2=1; */
   /* El offset será el tamaño de las dos cabeceras + 2 (información de fichero)*/
   header.offset = sizeof(bmpFileHeader) + sizeof(bmpInfoHeader) + 2;
-
+  remove(filename);
   f = fopen(filename, "w+");
   if (!f)
     printf("No se abrio el archivo\n"); //En caso de que no se pueda abrir el fichero
