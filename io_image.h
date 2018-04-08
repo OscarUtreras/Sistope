@@ -8,7 +8,7 @@
 #define IO_IMAGE_H
 
 unsigned char *LoadBMP(char *filename, bmpFileHeader *header, bmpInfoHeader *bInfoHeader);
-void SaveBMP(char *filename,bmpInfoHeader *bInfoHeader,unsigned char *imgdata);
+void SaveBMP(char *filename, bmpInfoHeader *bInfoHeader, unsigned char *imgdata);
 void DisplayInfo(bmpInfoHeader *info);
 
 #endif
