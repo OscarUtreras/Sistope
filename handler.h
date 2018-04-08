@@ -2,6 +2,7 @@
 #include "image_process.h"
 
 #include <ctype.h>
+#include <string.h>
 
 #ifndef HANDLER_H
 #define HANDLER_H

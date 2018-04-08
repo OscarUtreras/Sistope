@@ -13,12 +13,27 @@ int getArguments(int argc, char **argv, int *n_images, int *umbBinary, int *umbC
         switch (argument)
         {
         case 'c':
+            if(strcmp(optarg,"-u") == 0)
+            {
+              printf("Tiene que ingresar la cantidad de imagenes luego de -c.\n");
+              return 1;
+            }
             sscanf(optarg, "%d", n_images);
             break;
         case 'u':
+            if(strcmp(optarg,"-n") == 0)
+            {
+              printf("Tiene que ingresar el umbral para binarizar la imagen luego de -u.\n");
+              return 1;
+            }
             sscanf(optarg, "%d", umbBinary);
             break;
         case 'n':
+            if(strcmp(optarg,"-b") == 0)
+            {
+              printf("Tiene que ingresar el umbral para la clasificacion luego de -n.\n");
+              return 1;
+            }
             sscanf(optarg, "%d", umbClassi);
             break;
         case 'b':
@@ -89,7 +104,7 @@ Entrada: argc y argv.
 Salida: nada. */
 void Handler(int argc, char **argv)
 {
-    int i, n_images, umbBinary, umbClassi, flag;
+    int i, n_images=-1, umbBinary=-1, umbClassi=-1, flag=-1;
     int test = getArguments(argc, argv, &n_images, &umbBinary, &umbClassi, &flag);
     if(argc<7)
         printf("Faltan argumentos, por favor ejecute el programa con los argumentos necesarios.\n");
