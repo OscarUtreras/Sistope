@@ -24,8 +24,8 @@ unsigned char *GreyScale(bmpInfoHeader *info, unsigned char *img)
 }
 
 /* Funcion encargada de binarizar la imagen.
-Entrada: Estructura con la informacion de la imagen, imagen en escala de grises y umbral de binarizacion.
-Salida: imagen binarizada (arreglo con los pixeles de la imagen). */
+Entrada: Estructura con la informacion de la imagen, imagen en escala de grises, umbral de binarizacion y cantidad de pixeles negros.
+Salida: imagen binarizada (arreglo con los pixeles de la imagen), cantidad de pixeles negros por referencia. */
 unsigned char *Binary(bmpInfoHeader *info, unsigned char *imgGrey, int umbral, int *blacks)
 {
   int x, y, cantBits = 3;
