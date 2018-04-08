@@ -6,7 +6,6 @@
 
 int main(int argc, char **argv)
 {
-  
   Handler(argc, argv);
   return 0;
 }
