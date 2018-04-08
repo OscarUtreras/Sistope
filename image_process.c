@@ -49,7 +49,7 @@ unsigned char *Binary(bmpInfoHeader *info, unsigned char *imgGrey, int umbral, i
 }
 
 /* Funcion encargada clasificar la imagen binarizada.
-Entrada: Estructura con la informacion de la imagen, imagen binarizada y umbral de clasificacion.
+Entrada: Estructura con la informacion de la imagen, cantidad de pixeles negros y umbral de clasificacion.
 Salida: 1 si es nearly black o 0 si no es nearly black. */
 int nearlyBlack(bmpInfoHeader *info, int blacks, int umbClassi)
 {
