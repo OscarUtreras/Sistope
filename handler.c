@@ -39,10 +39,10 @@ int getArguments(int argc, char **argv, int *n_images, int *umbBinary, int *umbC
     return 0;
 }
 
-/* Procedimiento encargado de invocar a las distintas funciones necesarias para obtener la imagen binarizada .
+/* Procedimient encargado de invocar a las distintas funciones necesarias para obtener la imagen binarizada .
 Entrada: cantidad de imagenes, umbral de bonarizacion, umbral de clasificacion y bandera (indica si se muestra informacion por pantalla).
 Salida: nada. */
-void pipeline(int image_n, int umbral, int flag, int umbClassi)
+int pipeline(int image_n, int umbral, int flag, int umbClassi)
 {
     bmpInfoHeader info;
     bmpFileHeader header;
@@ -55,6 +55,8 @@ void pipeline(int image_n, int umbral, int flag, int umbClassi)
     // Primera fase del pipeline: Leer la imagen
     sprintf(filename, "imagen_%d.bmp", image_n);
     img = LoadBMP(filename, &header, &info);
+    if(img==NULL)
+      return 1;
 
     // Segunda fase del pipeline: Pasar imagen a escala de grises
     imgGrey = GreyScale(&info, img);
@@ -79,6 +81,7 @@ void pipeline(int image_n, int umbral, int flag, int umbClassi)
     free(img);
     free(imgGrey);
     free(imgBinary);
+    return 0;
 }
 
 /* Procedimiento encargado de manejar la ejecución del programa.
@@ -90,13 +93,17 @@ void Handler(int argc, char **argv)
     int test = getArguments(argc, argv, &n_images, &umbBinary, &umbClassi, &flag);
     if(argc<7)
         printf("Faltan argumentos, por favor ejecute el programa con los argumentos necesarios.\n");
-    if (test == 0)
+    else
     {
+      if (test == 0)
+      {
         if (flag == 1)
-            printf("|    Image       |   nearly black?  |\n");
+          printf("|    Image       |   nearly black?  |\n");
         for (i = 1; i <= n_images; i++)
         {
-            pipeline(i, umbBinary, flag, umbClassi);
+          if(pipeline(i, umbBinary, flag, umbClassi)==1)
+            printf("No se encontro la imagen_%d.bmp.\n", i);
         }
+      }
     }
 }
