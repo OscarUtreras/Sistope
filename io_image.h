@@ -11,4 +11,7 @@ unsigned char *LoadBMP(char *filename, bmpFileHeader *header, bmpInfoHeader *bIn
 void SaveBMP(char *filename, bmpInfoHeader *bInfoHeader, unsigned char *imgdata);
 void DisplayInfo(bmpInfoHeader *info);
 
+BMP *abrirImagen(char *filename);
+void guardarImagen(BMP *imagen, char *filename);
+
 #endif

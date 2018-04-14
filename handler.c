@@ -54,7 +54,7 @@ int getArguments(int argc, char **argv, int *n_images, int *umbBinary, int *umbC
     return 0;
 }
 
-/* Procedimient encargado de invocar a las distintas funciones necesarias para obtener la imagen binarizada .
+/* Funcion encargada de invocar a las distintas funciones necesarias para obtener la imagen binarizada .
 Entrada: cantidad de imagenes, umbral de bonarizacion, umbral de clasificacion y bandera (indica si se muestra informacion por pantalla).
 Salida: nada. */
 int pipeline(int image_n, int umbral, int flag, int umbClassi)
