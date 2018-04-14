@@ -1,8 +1,7 @@
 #include "image_process.h"
 
 /* Funcion encargada de pasar la imagen a escala de grises.
-Entrada: Estructura con la informacion de la imagen y arreglo con los pixeles de la imagen.
-Salida: imagen en escala de grises (arreglo con los pixeles de la imagen). */
+Entrada: Estructura con la informacion de la imagen. */
 void GreyScale(BMP* image)
 {
   int R,G,B,grey,i,j;
@@ -22,8 +21,8 @@ void GreyScale(BMP* image)
 }
 
 /* Funcion encargada de binarizar la imagen.
-Entrada: Estructura con la informacion de la imagen, imagen en escala de grises, umbral de binarizacion y cantidad de pixeles negros.
-Salida: imagen binarizada (arreglo con los pixeles de la imagen), cantidad de pixeles negros por referencia. */
+Entrada: Estructura con la informacion de la imagen y umbral de binarizacion.
+Salida: imagen binarizada (arreglo con los pixeles de la imagen). */
 
 void Binary(BMP*image, int umbBinary)
 {
@@ -51,7 +50,7 @@ void Binary(BMP*image, int umbBinary)
 }
 
 /* Funcion encargada clasificar la imagen binarizada.
-Entrada: Estructura con la informacion de la imagen, cantidad de pixeles negros y umbral de clasificacion.
+Entrada: Estructura con la informacion de la imagen y umbral de clasificacion.
 Salida: 1 si es nearly black o 0 si no es nearly black. */
 
 int nearlyBlack(BMP *image, int umbCla)

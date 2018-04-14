@@ -1,8 +1,8 @@
 #include "io_image.h"
 
-/* Funcion encargada cargar la imagen BMP.
-Entrada: nombre de la imagen, estructura que almacenara el header de la imagen y estructura que almacenara la informacion de la imagen.
-Salida: imagen cargada (arreglo con los pixeles de la imagen) y por referencia el header e informacion de la imagen. */
+/* Procedimiento encargado cargar la imagen BMP.
+Entrada: nombre de la imagen.
+Salida: imagen cargada con la estructura BMP */
 
 BMP *LoadBMP(char *filename)
 {
@@ -99,8 +99,7 @@ BMP *LoadBMP(char *filename)
 
 
 /* Procedimiento encargada almacenar la imagen BMP binarizada.
-Entrada: nombre de la imagen, estructura con el header de la imagen, estructura con la informacion de la imagen y imagen binarizada (arreglo con los pixeles de la imagen.
-Salida: genera un archivo BMP con la imagen binarizada. */
+Entrada: nombre de la imagen y estructura con la informacion de la imagen. */
 void SaveBMP(BMP *imagen, char *filename)
 {
   FILE *archivo; //Puntero FILE para el archivo de imágen a abrir
