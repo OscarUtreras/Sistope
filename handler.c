@@ -59,30 +59,26 @@ Entrada: cantidad de imagenes, umbral de bonarizacion, umbral de clasificacion y
 Salida: nada. */
 int pipeline(int image_n, int umbral, int flag, int umbClassi)
 {
-    bmpInfoHeader info;
-    bmpFileHeader header;
-    unsigned char *img;
-    unsigned char *imgGrey;
-    unsigned char *imgBinary;
+    BMP *img;
     char *filename = (char *)malloc(sizeof(char) * 16);
-    int result, blacks;
+    int result;
 
     // Primera fase del pipeline: Leer la imagen
     sprintf(filename, "imagen_%d.bmp", image_n);
-    img = LoadBMP(filename, &header, &info);
+    img = LoadBMP(filename);
     if(img==NULL)
       return 1;
 
     // Segunda fase del pipeline: Pasar imagen a escala de grises
-    imgGrey = GreyScale(&info, img);
+    GreyScale(img);
 
     // Tercera fase del pipeline: Psar de escala de grises a imagen binarizada
-    imgBinary = Binary(&info, imgGrey, umbral, &blacks);
+    Binary(img, umbral);
 
     // Cuarta frase del pipeline: Mostrar resultados de nearly black (en caso de que se solicite a traves de la bandera)
     if (flag == 1)
     {
-        result = nearlyBlack(&info, blacks, umbClassi);
+        result = nearlyBlack(img, umbClassi);
         if (result == 1)
             printf("| %s   |      yes         | \n", filename);
         else
@@ -91,11 +87,9 @@ int pipeline(int image_n, int umbral, int flag, int umbClassi)
 
     // Quinta fase del pipeline: Almacenar imagen binarizada
     sprintf(filename, "out_%d.bmp", image_n);
-    SaveBMP(filename, &info, imgBinary);
+    SaveBMP(img, filename);
 
     free(img);
-    free(imgGrey);
-    free(imgBinary);
     return 0;
 }
 

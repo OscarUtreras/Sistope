@@ -6,8 +6,8 @@
 
 int main(int argc, char **argv)
 {
-  //Handler(argc, argv);
-
+  Handler(argc, argv);
+  /*
   BMP *img=abrirImagen("imagen_1.bmp");
   EscalaGrises(img);
   Binarizado(img,50);
@@ -25,6 +25,7 @@ int main(int argc, char **argv)
     printf("Yes\n");
   else
     printf("No\n");
+  */
 
   return 0;
 }
